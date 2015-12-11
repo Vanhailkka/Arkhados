@@ -55,7 +55,7 @@ public class Grid extends Mesh {
         
         for (int x = 0; x < _sizeX; x++){
             for (int y = 0; y < _sizeY; y++){
-                result[x + y * _sizeY] = new Vector3f(x * _density,0, y * _density);
+                result[x + y * _sizeY] = new Vector3f((float)x * _density,0, (float)y * _density);
             }
         }
         
@@ -65,9 +65,9 @@ public class Grid extends Mesh {
     private Vector2f[] CreateTexCoords(){
         Vector2f[] result = new Vector2f[_sizeX*_sizeY];
         
-        for (int x = 0; x < _sizeX; x++){
-            for (int y = 0; y < _sizeY; y++){
-                result[x + y * _sizeY] = new Vector2f(x/_sizeX, y/_sizeY);
+        for (float x = 0; x < _sizeX; x++){
+            for (float y = 0; y < _sizeY; y++){
+                result[(int)x + (int)y *_sizeY] = new Vector2f(x/(float)_sizeX, y/ (float)_sizeY);
             }
         }
         
@@ -81,12 +81,13 @@ public class Grid extends Mesh {
         for (int x = 0; x < _sizeX; x++){
             for (int y = 0; y < _sizeY; y++){
                 Integer id = new Integer((int)(x + y * _sizeY));
+                resultList.add(id + _sizeY);
+                resultList.add(id + 1);                
                 resultList.add(id);
-                resultList.add(id + 1);
+                
                 resultList.add(id + _sizeY);
+                resultList.add(id + _sizeY + 1);                
                 resultList.add(id + 1);
-                resultList.add(id + _sizeY + 1);
-                resultList.add(id + _sizeY);
             }
         }
         short[] result = new short[resultList.size()];

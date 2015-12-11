@@ -99,7 +99,7 @@ public class ServerNetListener implements ConnectionListener,
             CharacterInteraction.removePlayer(playerId);
 
             if (!server.hasConnections() && someoneJoined) {
-                app.stop();
+                //app.stop();
             }
 
             sender.addCommand(new CmdPlayerStatusChange(playerId).setLeft());

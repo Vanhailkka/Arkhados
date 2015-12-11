@@ -15,6 +15,7 @@
 package arkhados.arena;
 
 import arkhados.CollisionGroups;
+import arkhados.Grid;
 import arkhados.World;
 import com.jme3.asset.AssetManager;
 import com.jme3.audio.Environment;
@@ -63,7 +64,7 @@ public class PillarArena extends AbstractArena {
     }
 
     private void createLavaQuad() {
-        Quad quad = new Quad(512, 512, true);
+        Grid quad = new Grid(64, 64, 8);
         Geometry geom = new Geometry("lava-terrain", quad);
         Material lavaMaterial = 
                 getAssetManager().loadMaterial("Materials/NewLava.j3m");
@@ -72,7 +73,7 @@ public class PillarArena extends AbstractArena {
                 .getChild("terrain")).attachChild(geom);
 
         geom.lookAt(Vector3f.UNIT_Y, Vector3f.UNIT_X);
-        geom.setLocalTranslation(-256, -2, -256);
+        //geom.setLocalTranslation(-256, -2, -256);
 
         AmbientLight ambientLight = new AmbientLight();
         ambientLight.setColor(ColorRGBA.White.mult(0.3f));
