@@ -64,7 +64,7 @@ public class PillarArena extends AbstractArena {
     }
 
     private void createLavaQuad() {
-        Grid quad = new Grid(64, 64, 8);
+        Grid quad = new Grid(getAssetManager().loadTexture("Textures/noise3.png"));
         Geometry geom = new Geometry("lava-terrain", quad);
         Material lavaMaterial = 
                 getAssetManager().loadMaterial("Materials/NewLava.j3m");
@@ -72,8 +72,8 @@ public class PillarArena extends AbstractArena {
         ((Node) getWorld().getWorldRoot()
                 .getChild("terrain")).attachChild(geom);
 
-        geom.lookAt(Vector3f.UNIT_Y, Vector3f.UNIT_X);
-        //geom.setLocalTranslation(-256, -2, -256);
+        //geom.lookAt(Vector3f.UNIT_Y, Vector3f.UNIT_X);
+        geom.setLocalTranslation(-256, -20, -6);
 
         AmbientLight ambientLight = new AmbientLight();
         ambientLight.setColor(ColorRGBA.White.mult(0.3f));
