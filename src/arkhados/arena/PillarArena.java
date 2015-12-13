@@ -22,7 +22,6 @@ import com.jme3.audio.Environment;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.collision.shapes.CollisionShape;
-import com.jme3.bullet.control.PhysicsControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.light.AmbientLight;
@@ -32,7 +31,6 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.shape.Quad;
 import java.util.List;
 
 public class PillarArena extends AbstractArena {
@@ -64,7 +62,7 @@ public class PillarArena extends AbstractArena {
     }
 
     private void createLavaQuad() {
-        Grid quad = new Grid(getAssetManager().loadTexture("Textures/noise3.png"));
+        Grid quad = new Grid(128, 128, 8);
         Geometry geom = new Geometry("lava-terrain", quad);
         Material lavaMaterial = 
                 getAssetManager().loadMaterial("Materials/NewLava.j3m");
@@ -73,7 +71,8 @@ public class PillarArena extends AbstractArena {
                 .getChild("terrain")).attachChild(geom);
 
         //geom.lookAt(Vector3f.UNIT_Y, Vector3f.UNIT_X);
-        geom.setLocalTranslation(-256, -20, -6);
+        geom.center();
+        geom.move(new Vector3f(0,-2f,0));
 
         AmbientLight ambientLight = new AmbientLight();
         ambientLight.setColor(ColorRGBA.White.mult(0.3f));

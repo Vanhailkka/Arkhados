@@ -6,8 +6,8 @@ varying vec2 texCoord;
 attribute vec2 inTexCoord;
 
 void main() {
-    texCoord = inTexCoord;
+    texCoord = inTexCoord *1.0;
     vec3 inPos = inPosition;
-    inPos.y += inPosition.y * -0.5 + sin(g_Time+inPosition.y) * inPosition.y; 
+    inPos.y += sin(1.0 * inPos.x + g_Time) * cos(1.0 * inPos.z + g_Time) * 1.0;
     gl_Position = g_WorldViewProjectionMatrix * vec4(inPos, 1.0); 
 }

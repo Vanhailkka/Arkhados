@@ -18,22 +18,13 @@ import java.util.List;
  */
 
 
-public class Grid extends Mesh {
+public final class Grid extends Mesh {
     private int _sizeX;
     private int _sizeY;
     private float _density;
-    AbstractHeightMap heightmap = null;
-    
-    public Grid(int sizeX, int sizeY, float density){
-        updateGeometry(sizeX, sizeY, density);        
-    }
-    
-    public Grid(Texture image){
-        int height = image.getImage().getHeight();
-        int width = image.getImage().getWidth();
-        heightmap = new ImageBasedHeightMap(image.getImage());
-        heightmap.load();
-        updateGeometry(height, width, 1);
+
+    public Grid(int sizeX, int sizeY, float scale){
+        updateGeometry(sizeX, sizeY, scale);        
     }
     
     public void updateGeometry(int sizeX, int sizeY, float density){
@@ -43,7 +34,7 @@ public class Grid extends Mesh {
         Vector3f[] vertices = CreateVertices();
         Vector3f[] normals = CreateNormals();
         Vector2f[] texCoords = CreateTexCoords();
-        short[] indices = CreateIndices();
+        int[] indices = CreateIndices();
         setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(vertices));        
         setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(texCoords));
         setBuffer(Type.Normal, 3, BufferUtils.createFloatBuffer(normals));
@@ -63,18 +54,10 @@ public class Grid extends Mesh {
     }
     
     private Vector3f[] CreateVertices(){
-        Vector3f[] result = new Vector3f[_sizeX*_sizeY];
-        float[] map = null;
-        if(heightmap != null){
-            map = heightmap.getHeightMap();
-            
-        }
+        Vector3f[] result = new Vector3f[_sizeX*_sizeY];       
         for (int x = 0; x < _sizeX; x++){
             for (int y = 0; y < _sizeY; y++){
                 result[x + y * _sizeY] = new Vector3f((float)x * _density,0, (float)y * _density);
-                if(heightmap != null){
-                    result[x + y * _sizeY].y = map[x + y * _sizeY]*0.025f;
-                }
             }
         }
         
@@ -93,13 +76,13 @@ public class Grid extends Mesh {
         return result;
     }
     
-    private short[] CreateIndices(){
+    private int[] CreateIndices(){
         List<Integer> resultList = new ArrayList<>();
 
         
         for (int x = 0; x < _sizeX; x++){
             for (int y = 0; y < _sizeY; y++){
-                Integer id = new Integer((int)(x + y * _sizeY));
+                Integer id = (int)(x + y * _sizeY);
                 resultList.add(id + _sizeY);
                 resultList.add(id + 1);                
                 resultList.add(id);
@@ -109,10 +92,10 @@ public class Grid extends Mesh {
                 resultList.add(id + 1);
             }
         }
-        short[] result = new short[resultList.size()];
+        int[] result = new int[resultList.size()];
         
         for (int i = 0; i < resultList.size(); ++i) { 
-                result[i] = resultList.get(i).shortValue(); 
+                result[i] = resultList.get(i); 
         }
         
         return result;
