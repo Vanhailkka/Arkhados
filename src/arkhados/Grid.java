@@ -69,7 +69,7 @@ public final class Grid extends Mesh {
         
         for (float x = 0; x < _sizeX; x++){
             for (float y = 0; y < _sizeY; y++){
-                result[(int)x + (int)y *_sizeY] = new Vector2f(x/(float)_sizeX, y/ (float)_sizeY);
+                result[(int)x + (int)y *_sizeY] = new Vector2f(x/(float)_sizeX*4f, y/ (float)_sizeY*4f);
             }
         }
         
